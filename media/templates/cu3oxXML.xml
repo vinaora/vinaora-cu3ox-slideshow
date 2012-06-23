@@ -13,13 +13,13 @@
   <textBackground>$TextBackground$</textBackground>
   <startBackground>$StartBackground$</startBackground>
   <noLogo>$NoLogo$</noLogo>
-  <shadowDarkness>100</shadowDarkness>
-  <textDistance>3</textDistance>
+  <shadowDarkness>$ShadowDarkness$</shadowDarkness>
+  <textDistance>$TextDistance$</textDistance>
   <autoplay>$AutoPlayDelay$</autoplay>
   <rDirection>$RDirection$</rDirection>
-  <borderRadius>16</borderRadius>
+  <borderRadius>$BorderRadius$</borderRadius>
   <descriptionWidth>$DescWidth$</descriptionWidth>
-  <descriptionHeight>60</descriptionHeight>
+  <descriptionHeight>$DescHeight$</descriptionHeight>
   <descriptionOffset>$DescOffset$</descriptionOffset>
   <descriptionType>$DescType$</descriptionType>
   <logoText>$LogoText$</logoText>
