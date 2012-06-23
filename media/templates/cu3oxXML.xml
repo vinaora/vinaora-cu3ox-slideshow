@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Cu3ox>
+<Settings>
+  <imageWidth>$ImageWidth$</imageWidth>
+  <imageHeight>$ImageHeight$</imageHeight>
+  <segments>$Segments$</segments>
+  <tweenTime>$TweenTime$</tweenTime>
+  <tweenDelay>$TweenDelay$</tweenDelay>
+  <tweenType>$TweenType$</tweenType>
+  <zDistance>$ZDistance$</zDistance>
+  <expand>$Expand$</expand>
+  <innerColor>$InnerColor$</innerColor>
+  <textBackground>$TextBackground$</textBackground>
+  <startBackground>$StartBackground$</startBackground>
+  <noLogo>$NoLogo$</noLogo>
+  <shadowDarkness>100</shadowDarkness>
+  <textDistance>3</textDistance>
+  <autoplay>$AutoPlayDelay$</autoplay>
+  <rDirection>$RDirection$</rDirection>
+  <borderRadius>16</borderRadius>
+  <descriptionWidth>$DescWidth$</descriptionWidth>
+  <descriptionHeight>60</descriptionHeight>
+  <descriptionOffset>$DescOffset$</descriptionOffset>
+  <descriptionType>$DescType$</descriptionType>
+  <logoText>$LogoText$</logoText>
+  <logoLink>$LogoLink$</logoLink>
+  <noShadow>$NoShadow$</noShadow>
+  <showControls>$ShowControls$</showControls>
+  <startLogo>$LogoFile$</startLogo>
+  <loop>$AutoLoop$</loop>
+  <sound>$SoundFile$</sound>
+</Settings>
+$ImageList$
+</Cu3ox>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5.0" client="site" method="upgrade">
+	<name>Vinaora Cu3ox Slideshow</name>
+	<author>VINAORA</author>
+	<creationDate>Jun 2012</creationDate>
+	<copyright>Copyright (C) 2012 VINAORA. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>info@vinaora.com</authorEmail>
+	<authorUrl>http://vinaora.com</authorUrl>
+	<version>2.5.0</version>
+	<description>MOD_VT_CU3OX_SLIDESHOW_XML_DESCRIPTION</description>
+	<files>
+		<filename module="mod_vt_cu3ox_slideshow">mod_vt_cu3ox_slideshow.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>README.markdown</filename>
+		<folder>fields</folder>
+		<folder>helper</folder>
+		<folder>tmpl</folder>
+	</files>
+
+	<media folder="media" destination="mod_vt_cu3ox_slideshow">
+		<filename>index.html</filename>
+		<filename>intro.html</filename>
+		<folder>js</folder>
+		<folder>templates</folder>
+	</media>
+
+	<languages>
+		<language tag="en-GB">language/en-GB.mod_vt_cu3ox_slideshow.ini</language>
+		<language tag="en-GB">language/en-GB.mod_vt_cu3ox_slideshow.sys.ini</language>
+	</languages>
+</extension>

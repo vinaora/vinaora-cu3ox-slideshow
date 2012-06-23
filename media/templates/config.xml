@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<template>
+  <name>Standard</name>
+  <params>
+  </params>
+  <files>
+    <file src="cu3oxXML.xml">
+      <filter name="params" />
+    </file>
+    <file src="cu3oxCSS.css">
+      <filter name="params" />
+    </file>
+    <file src="cu3ox.swf" />
+    <file src="swfobject.js" />
+  </files>
+  <html src="index.html" />
+</template>

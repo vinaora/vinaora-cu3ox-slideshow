@@ -1,0 +1,34 @@
+headline {
+  display: block;
+  color: $HeadColor$;
+  font-size: $HeadFontSize$;  
+  font-family: $HeadFontFamily$;
+  font-style: $HeadFontStyle$;
+  font-weight: $HeadFontWeight$;
+  text-decoration: $HeadTextDecor$;
+}
+
+paragraph {
+  display: block;
+  color: $ParaColor$;
+  font-size: $ParaFontSize$;
+  font-family: $ParaFontFamily$;
+  font-style: $ParaFontStyle$;
+  font-weight: $ParaFontWeight$;
+  text-decoration: $ParaTextDecor$;
+}
+
+break {
+  font-size: 7;
+  display:block;
+}
+
+a {
+  color: $LinkColor$;
+  display: inline;
+}
+
+a:hover {
+  color: $LinkHoverColor$;
+  display: inline;
+}
