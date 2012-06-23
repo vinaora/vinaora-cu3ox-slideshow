@@ -1,3 +1,21 @@
+<?php
+/**
+ * @version		$Id: default.php 2012-06-20 vinaora $
+ * @package		VINAORA CU3OX SLIDESHOW
+ * @subpackage	mod_vt_cu3ox_slideshow
+ * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * @website		http://vinaora.com
+ * @twitter		http://twitter.com/vinaora
+ * @facebook	http://facebook.com/vinaora
+ * @google+		https://plus.google.com/111142324019789502653
+ */
+
+// no direct access
+defined('_JEXEC') or die;
+?>
+
 <!-- BEGIN: Vinaora Cu3ox Slideshow >> http://vinaora.com/ -->
 <div id="cu3ox$C3O_SUFFIX$" style="width:$CU3OX_WIDTH$px;height:$CU3OX_HEIGHT$px;margin:0 auto;text-align:center">
 	<script language="JavaScript" type="text/javascript">
