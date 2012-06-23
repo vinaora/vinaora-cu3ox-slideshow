@@ -14,7 +14,6 @@
 
 // no direct access
 defined('_JEXEC') or die;
-
 ?>
 
 <!-- BEGIN: Vinaora Cu3ox Slideshow >> http://vinaora.com/ -->
