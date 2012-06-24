@@ -62,6 +62,8 @@ $params->set('SoundFile', '');
 $EnginePath = JPATH_CACHE.DS.'mod_vt_cu3ox_slideshow'.DS.$params->get('ID').DS.'engine';
 $params->set('EnginePath', $EnginePath);
 
+modVtCu3oxSlideshowHelper::addSWFObject(  );
+
 modVtCu3oxSlideshowHelper::makeFiles( $params );
 
 require JModuleHelper::getLayoutPath('mod_vt_cu3ox_slideshow', $params->get('layout', 'default'));

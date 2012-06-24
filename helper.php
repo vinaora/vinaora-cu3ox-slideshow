@@ -244,21 +244,23 @@ class modVtCu3oxSlideshowHelper{
 	/*
 	 * Add SWFObject Library to <head> tag
 	 */
-	public static function addjQuery($source='local', $version='latest'){
-		$source = strtolower(trim($source));
-		$version = trim($version);
+	public static function addSWFObject($source='local', $version='2.2'){
 
 		switch($source){
+
 			case 'local':
-				JHtml::script("media/mod_vt_nice_slideshow/js/jquery/$version/jquery.min.js");
+				JHtml::script("media/mod_vt_cu3ox_slideshow/js/swfobject/$version/swfobject.js");
 				break;
+
 			case 'google':
-				JHtml::script("https://ajax.googleapis.com/ajax/libs/jquery/$version/jquery.min.js");
+				JHtml::script("http://ajax.googleapis.com/ajax/libs/swfobject/$version/swfobject.js");
 				break;
+
 			default:
 				return false;
 		}
 		return true;
+
 	}
 	
 }
