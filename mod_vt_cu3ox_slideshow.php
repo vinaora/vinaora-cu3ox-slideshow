@@ -21,6 +21,8 @@ require_once dirname(__FILE__).DS.'helper.php';
 $module_id	= $module->id;
 $base_url	= rtrim(JURI::base(true),'/');
 
+$params->set('ID', $module->id);
+
 // Initialize some variables
 $params->set('ImageWidth', '640');
 $params->set('ImageHeight', '360');
@@ -57,8 +59,9 @@ $params->set('LogoFile', '');
 $params->set('AutoLoop', '1');
 $params->set('SoundFile', '');
 
+$EnginePath = JPATH_CACHE.DS.'mod_vt_cu3ox_slideshow'.DS.$params->get('ID').DS.'engine';
+$params->set('EnginePath', $EnginePath);
 
+modVtCu3oxSlideshowHelper::makeFiles( $params );
 
-
-
-
+require JModuleHelper::getLayoutPath('mod_vt_cu3ox_slideshow', $params->get('layout', 'default'));
