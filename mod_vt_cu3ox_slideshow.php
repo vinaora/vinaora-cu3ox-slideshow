@@ -18,52 +18,32 @@ defined('_JEXEC') or die;
 // Require the base helper class only once
 require_once dirname(__FILE__).DS.'helper.php';
 
-$module_id	= $module->id;
-$base_url	= rtrim(JURI::base(true),'/');
+// Add SWFObject library. Check SWFObject loaded or not.
+$app = JFactory::getApplication();
+$sobjsource		= $params->get('swfobject_source', 'local');
+$sobjversion	= $params->get('swfobject_version', '2.2');
 
+if($app->get('swfobject') == false) {
+	modVtCu3oxSlideshowHelper::addSWFObject( $sobjsource, $sobjversion );
+	$app->set('swfobject', true);
+}
+
+$module_id	= $module->id;
 $params->set('ID', $module->id);
 
-// Initialize some variables
-$params->set('ImageWidth', '640');
-$params->set('ImageHeight', '360');
-$params->set('Segments', '5');
-$params->set('TweenTime', '1200');
-$params->set('TweenDelay', '100');
-$params->set('TweenType', 'easeInOutBack');
-$params->set('ZDistance', '0');
-$params->set('Expand', '20');
+$base_url	= rtrim(JURI::base(true), '/');
 
-$params->set('InnerColor', '0x111111');
-$params->set('TextBackground', '0x333333');
-$params->set('StartBackground', '0xcccccc');
-
-$params->set('NoLogo', '0');
-$params->set('ShadowDarkness', '100');
-$params->set('TextDistance', '3');
-$params->set('AutoPlayDelay', '3');
-$params->set('RDirection', 'random');
-
-$params->set('BorderRadius', '16');
-$params->set('DescWidth', '610');
-$params->set('DescHeight', '60');
-$params->set('DescOffset', '290');
-$params->set('DescType', 'upDown');
-
-$params->set('LogoText', '');
-$params->set('LogoLink', '');
-
-$params->set('NoShadow', '0');
-$params->set('ShowControls', 'true');
-
-$params->set('LogoFile', '');
-$params->set('AutoLoop', '1');
-$params->set('SoundFile', '');
-
-$EnginePath = JPATH_CACHE.DS.'mod_vt_cu3ox_slideshow'.DS.$params->get('ID').DS.'engine';
-$params->set('EnginePath', $EnginePath);
-
-modVtCu3oxSlideshowHelper::addSWFObject(  );
-
+modVtCu3oxSlideshowHelper::validParams( $params );
 modVtCu3oxSlideshowHelper::makeFiles( $params );
+
+$FirstImage 	= $params->get('FirstImage');
+$swf			= $params->get('EngineURL').'/vt_cu3ox_slideshow.swf';
+if($params->get('NoShadow') == '1'){
+	$PanelWidth		= $params->get('ImageWidth');
+	$PanelHeight	= $params->get('ImageHeight');
+}else{
+	$PanelWidth		= (int) $params->get('ImageWidth') + 2*$params->get('MarginHoz', '80');;
+	$PanelHeight	= (int) $params->get('ImageHeight') + 2*$params->get('MarginVer', '80');
+}
 
 require JModuleHelper::getLayoutPath('mod_vt_cu3ox_slideshow', $params->get('layout', 'default'));

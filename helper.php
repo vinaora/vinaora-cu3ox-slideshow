@@ -22,85 +22,152 @@ class modVtCu3oxSlideshowHelper{
 
 	public static function &validParams( $params ){
 	
-		$param	= intval($params->get('ImageWidth'));
-		$param	= (!$param) ? '640' : $param;
+		$param	= (int) $params->get('ImageWidth');
+		$param	= (!empty($param)) ? $param : '640';
 		$params->set('ImageWidth', $param);
 		
-		$param	= intval($params->get('ImageHeight'));
-		$param	= (!$param) ? '480' : $param;
+		$param	= (int) $params->get('ImageHeight');
+		$param	= (!empty($param)) ? $param : '480';
 		$params->set('ImageHeight', $param);
 		
-		$param	= intval($params->get('TweenTime', 1200));
-		$params->set('TweenTime', $param/1000);
+		$param	= trim($params->get('TweenTime', '1.2'));
+		$params->set('TweenTime', $param);
 		
-		$param	= intval($params->get('TweenDelay', 100));
-		$params->set('TweenDelay', $param/1000);
+		$param	= (int) $params->get('TweenDelay', '0.1');
+		$params->set('TweenDelay', $param);
 		
-		$param	= intval($params->get('ZDistance', 0));
+		$param	= (int) $params->get('ZDistance', '0');
 		$params->set('ZDistance', $param);
 		
-		$params->set('ImageList', self::_getImageSettings($params));
-	}
-	
-	public static function makeFiles($params){
-	
-		$buffer = '<!DOCTYPE html><title></title>';
-		
-		// Make directory /cache/mod_vt_cu3ox_slideshow/ if not exist
-		$path = JPATH_CACHE.DS.'mod_vt_cu3ox_slideshow';
-		if( !is_dir($path) ){
-			JFolder::create($path);
-			JFile::write($path.DS.'index.html', $buffer);
+		$param	= (int) $params->get('Segments');
+		if( !$param ){
+			$param = (int) $params->get('SegmentsMax', '10');
+			$params->set('Segments', rand(1,$param));
+			$params->set('SegmentsDefault', '0');
+		}else{
+			$params->set('SegmentsDefault', $param);
 		}
 		
-		// Make directory /cache/mod_vt_cu3ox_slideshow/[module_id]/ if not exist
-		$path = $path.DS.$params->get('ID');
+		$param	= $params->get('InnerColor');
+		$param	= '0x'.ltrim($param, '#');
+		$params->set('InnerColor', $param);
+		
+		$param	= $params->get('TextBackground');
+		$param	= '0x'.ltrim($param, '#');
+		$params->set('TextBackground', $param);
+		
+		$param	= $params->get('StartBackground');
+		$param	= '0x'.ltrim($param, '#');
+		$params->set('StartBackground', $param);
+		
+		$TweenType	= "linear,"
+					. "easeInQuad,easeOutQuad,easeInOutQuad,easeOutInQuad,"
+					. "easeInCubic,easeOutCubic,easeInoutCubic,easeOutInCubic,"
+					. "easeInQuart,easeOutQuart,easeInOutQuart,easeOutInQuart,"
+					. "easeInQuint,easeOutQuint,easeInOutQuint,easeOutInQuint,"
+					. "easeInSine,easeOutSine,easeInOutSine,easeOutInSine,"
+					. "easeInExpo,easeOutExpo,easeInOutExpo,easeOutInExpo,"
+					. "easeInCirc,easeOutCirc,easeInOutCirc,easeOutInCirc,"
+					. "easeInElastic,easeOutElastic,easeInOutElastic,easeOutInElastic,"
+					. "easeInBack,easeOutBack,easeInOutBack,easeOutInBack,"
+					. "easeInBounce,easeOutBounce,easeInOutBounce,easeOutInBounce";
+
+		$TweenType	= explode(",", $TweenType);
+		$param	= $params->get('TweenType');
+		$param	= ( $param='random' ) ? $TweenType[array_rand($TweenType, 1)] : $param;
+		$params->set('TweenType', $param);
+		
+		$param	= ltrim($params->get('LogoFile'), '\\/');
+		$logo	= JPath::clean(JPATH_BASE.DS.$param);
+		$param	= is_file($logo) ? JPath::clean($param, '/') : 'media/mod_vt_cu3ox_slideshow/images/logo.jpg';
+		$param	= rtrim(JURI::base(true), '/') . '/' . $param;
+		$params->set('LogoFile', $param);
+		
+		$param	= self::_getImageSettings($params);
+		$params->set('ImageList', $param);
+		
+		return $params;
+	}
+	
+	/*
+	 * Make the XML, CSS, SWF files for Cu3ox Slideshow
+	 */
+	public static function makeFiles( $params ){
+		
+		$buffer = '<!DOCTYPE html><title></title>';
+		
+		// Make directory /media/mod_vt_cu3ox_slideshow/[module_id]/ if not exist
+		$path	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/'.$params->get('ID');
+		$path	= JPath::clean($path);
 		if( !is_dir($path) ){
 			JFolder::create($path);
 			JFile::write($path.DS.'index.html', $buffer);
 			
 			$path = $path.DS.'engine';
-			JFolder::create($path);
-			JFile::write($path.DS.'index.html', $buffer);
-			
-			// JFile::write($path.DS.$params->get('lastedit').'.log', time());
+			if( !is_dir($path) ){
+				JFolder::create($path);
+				JFile::write($path.DS.'index.html', $buffer);
+			}
 		}
 		
-		self::_makeXML($params);
-		self::_makeCSS($params);
-		self::_makeSWF($params);
+		$EnginePath	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/'.$params->get('ID').'/engine';
+		$EnginePath	= JPath::clean($EnginePath);
+		$params->set('EnginePath', $EnginePath);
+		
+		$EngineURL	= JURI::base(true).'/media/mod_vt_cu3ox_slideshow/'.$params->get('ID').'/engine';
+		$EngineURL	= JPath::clean($EngineURL, '/');
+		$params->set('EngineURL', $EngineURL);
+		
+		$cache_time	= (int) $params->get('cache_time', '900');
+		$log		= $EnginePath.DS.$params->get('lastedit').'.log';
+		
+		// Check the file log is exist or not. If exists then check the created time
+		if( !is_file($log) || ( (int) JFile::read($log) + $cache_time < time()) ){
+		
+			self::_makeXML($params);
+			self::_makeCSS($params);
+			self::_makeSWF($params);
+			
+			$buffer = time();
+			JFile::write($EnginePath.DS.$params->get('lastedit').'.log', $buffer);
+		}
 	}
 	
 	/*
-	 * Make the Cu3ox SWF file in the directory /cache/mod_vt_cu3ox_slideshow/[id]/engine/
+	 * Make the Cu3ox SWF file in the directory /media/mod_vt_cu3ox_slideshow/[id]/engine/
 	 */
 	private static function _makeSWF( $params ){
 		$src = JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3ox.swf';
+		$src = JPath::clean($src);
 		JFile::copy($src, $params->get('EnginePath').DS.'vt_cu3ox_slideshow.swf');
 	}
 
 	/*
-	 * Make the Config XML file in the directory /cache/mod_vt_cu3ox_slideshow/[id]/engine/
+	 * Make the Config XML file in the directory /media/mod_vt_cu3ox_slideshow/[id]/engine/
 	 */	
 	private static function _makeXML( $params ){
 
-		$path	= JPath::clean( JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3oxXML.xml' );
+		$path	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3oxXML.xml';
+		$path	= JPath::clean( $path );
 		$str	= file_get_contents( $path );
 		
 		// Replace XML variables
 		$str	= preg_replace( "/\\$(\w+)\\$/e", '$params->get("$1")', $str );
 		
+		$node	= new SimpleXMLElement($str);
+		
 		// Make file XML
 		$path	= $params->get('EnginePath').DS.'vt_cu3ox_slideshowXML.xml';
-		JFile::write( $path, $str);
+		JFile::write( $path, $node->asXML());
 	}
 	
 	/*
-	 * Make the Main CSS file in the directory /cache/mod_vt_cu3ox_slideshow/[id]/engine/
+	 * Make the Main CSS file in the directory /media/mod_vt_cu3ox_slideshow/[id]/engine/
 	 */
 	private static function _makeCSS( $params ){
 		
-		$path	= JPath::clean( JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3oxCSS.css' );
+		$path	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3oxCSS.css';
+		$path	= JPath::clean( $path );
 		$str	= file_get_contents( $path );
 		
 		// Replace CSS variables
@@ -111,11 +178,21 @@ class modVtCu3oxSlideshowHelper{
 		JFile::write( $path, $str);
 	}
 	
+	/*
+	 * Get the Image List Settings
+	 */
 	private static function _getImageSettings( $params ){
+		$str = '';
+		
 		// Create Element - <Cu3ox>
 		$node = new SimpleXMLElement('<Cu3ox />');
 		
-		$images = self::getItems($params);
+		// Get all images relative paths
+		$images = self::getItems($params, false);
+		
+		if(empty($images) || !count($images)) return $str;
+
+		$params->set('FirstImage', $images[0]);
 		
 		foreach($images as $position=>$image){
 
@@ -126,31 +203,46 @@ class modVtCu3oxSlideshowHelper{
 			// Create Element - <Cu3ox>.<Image>.<Settings>
 			$nodeL2 =& $nodeL1->addChild('Settings');
 			
-				// Create Element - <Cu3ox>.<Image>.<Settings>.<goLink>
-				$param = $params->get('goLink');
-				$nodeL2->addChild('goLink', self::getParam($param, $position));
-			
-				// Create Element - <Cu3ox>.<Image>.<Settings>.<rDirection>
-				$param = $params->get('rDirectionItems');
-				$nodeL2->addChild('rDirection', self::getParam($param, $position));
-			
-				// Create Element - <Cu3ox>.<Image>.<Settings>.<segments>
-				$param = $params->get('segmentsItems');
-				$nodeL2->addChild('segments', self::getParam($param, $position));
+			// Create Element - <Cu3ox>.<Image>.<Settings>.<goLink>
+			// $param	= $params->get('goLink');
+			$param	= $params->get('item_url');
+			$param	= self::getParam($param, $position+1, "\n");
+			$nodeL3 =& $nodeL2->addChild('goLink', $param);
+			$nodeL3->addAttribute('target', $params->get('item_target'));
+		
+			// Create Element - <Cu3ox>.<Image>.<Settings>.<rDirection>
+			$param	= $params->get('item_rdirection');
+			$param	= self::getParam($param, $position+1, "\n");
+			$param	= strtolower(trim($param));
+			$param	= ( in_array($param, array("left,right,up,down,random")) ) ? $param : $params->get('RDirection');
+			$param	= ($param != 'random') ? $param : '';
+			$nodeL3 =& $nodeL2->addChild('rDirection', $param);
+		
+			// Create Element - <Cu3ox>.<Image>.<Settings>.<segments>
+			$param	= $params->get('item_segments');
+			$param	= self::getParam($param, $position+1, "\n");
+			$param	= (int) $param;
+			$param	= (!empty($param)) ? $param : $params->get('SegmentsDefault');
+			$param	= (!empty($param)) ? $param : rand(1,$params->get('SegmentsMax'));
+			$nodeL3 =& $nodeL2->addChild('segments', $param);
 			
 			// Create Element - <Cu3ox>.<Image>.<Text>
 			$nodeL2 =& $nodeL1->addChild('Text');
 				
-				// Create Element - <Cu3ox>.<Image>.<Text>.<headline>
-				$param = $params->get('headline');
-				$nodeL2->addChild('headline', self::getParam($param, $position));
-				
-				// Create Element - <Cu3ox>.<Image>.<Text>.<paragraph>
-				$param = $params->get('paragraph');
-				$nodeL2->addChild('paragraph', self::getParam($param, $position));
+			// Create Element - <Cu3ox>.<Image>.<Text>.<headline>
+			// $param	= $params->get('headline');
+			$param	= $params->get('item_title');
+			$param	= self::getParam($param, $position+1, "\n");
+			$nodeL3 =& $nodeL2->addChild('headline', $param);
+			
+			// Create Element - <Cu3ox>.<Image>.<Text>.<paragraph>
+			// $param	= $params->get('paragraph');
+			$param	= $params->get('item_description');
+			$param	= self::getParam($param, $position+1, "\n");
+			$nodeL3 =& $nodeL2->addChild('paragraph', $param);
+			
+			$str .= $nodeL1->asXML();
 		}
-		
-		$str = $xml->xpath('/Image');
 		
 		return $str;
 	}
@@ -158,7 +250,7 @@ class modVtCu3oxSlideshowHelper{
 	/*
 	 * Get the Paths of Items
 	 */
-	public static function getItems( $params ){
+	public static function getItems( $params, $absolute=true ){
 
 		$param	= $params->get('item_path');
 		$param	= str_replace(array("\r\n","\r"), "\n", $param);
@@ -166,7 +258,7 @@ class modVtCu3oxSlideshowHelper{
 
 		// Get Paths from invidual paths
 		foreach($param as $key=>$value){
-			$param[$key] = self::validPath($value);
+			$param[$key] = self::validPath($value, $absolute);
 		}
 		// Remove empty element
 		$param = array_filter($param);
@@ -182,7 +274,7 @@ class modVtCu3oxSlideshowHelper{
 			$param	= JFolder::files(JPATH_BASE.DS.'images'.DS.$param, $filter, true, true, $exclude, $excludefilter);
 			foreach($param as $key=>$value){
 				$value = substr($value, strlen(JPATH_BASE.DS) - strlen($value));
-				$param[$key] = self::validPath($value);
+				$param[$key] = self::validPath($value, $absolute);
 			}
 		}
 
@@ -194,7 +286,7 @@ class modVtCu3oxSlideshowHelper{
 	/*
 	 * Get the Valid Path of Item
 	 */
-	public static function validPath( $path ){
+	public static function validPath( $path, $absolute=true ){
 		$path = trim($path);
 
 		// Check file type is image or not
@@ -214,7 +306,7 @@ class modVtCu3oxSlideshowHelper{
 		if (!is_file(JPATH_BASE.DS.$path)) return '';
 
 		// Convert it to url path
-		$path = JPath::clean(JURI::base(true)."/".$path, "/");
+		$path = $absolute ? JPath::clean(JURI::base(true)."/".$path, "/") : JPath::clean($path, '/');
 		
 		return $path;
 	}

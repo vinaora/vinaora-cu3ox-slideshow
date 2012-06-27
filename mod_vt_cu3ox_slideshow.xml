@@ -30,4 +30,91 @@
 		<language tag="en-GB">language/en-GB.mod_vt_cu3ox_slideshow.ini</language>
 		<language tag="en-GB">language/en-GB.mod_vt_cu3ox_slideshow.sys.ini</language>
 	</languages>
+	<config>
+		<fields name="params" addfieldpath="modules/mod_vt_cu3ox_slideshow/fields">
+			<fieldset name="basic">
+				<field name="lastedit" type="lastedit" />
+				<field name="ImageWidth" type="text" default="640" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_IMAGEWIDTH" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_IMAGEWIDTH_DESC" />
+				<field name="ImageHeight" type="text" default="480" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_IMAGEHEIGHT" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_IMAGEHEIGHT_DESC" />
+				<field type="spacer" name="@spacer01" hr="true" />
+				<field name="Segments" type="text" default="0" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_SEGMENTS" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_SEGMENTS_DESC" />
+				<field name="SegmentsMax" type="text" default="10" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_SEGMENTS_MAX" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_SEGMENTS_MAX_DESC" />
+				<field name="RDirection" type="list" default="random" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_RDIRECTION" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_RDIRECTION_DESC">
+					<option value="random">MOD_VT_CU3OX_SLIDESHOW_OPTION_RDIRECTION_RANDOM</option>
+					<option value="left">MOD_VT_CU3OX_SLIDESHOW_OPTION_RDIRECTION_LEFT</option>
+					<option value="right">MOD_VT_CU3OX_SLIDESHOW_OPTION_RDIRECTION_RIGHT</option>
+					<option value="up">MOD_VT_CU3OX_SLIDESHOW_OPTION_RDIRECTION_UP</option>
+					<option value="down">MOD_VT_CU3OX_SLIDESHOW_OPTION_RDIRECTION_DOWN</option>
+				</field>
+				<field name="TweenType" type="filelist" default="random" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_TWEENTYPE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_TWEENTYPE_DESC" directory="media/mod_vt_cu3ox_slideshow/transition" filter=".png" exclude="" stripext="png" hide_none="1" hide_default="1"/>
+				<field name="TweenTime" type="text" default="1200" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_TWEENTIME" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_TWEENTIME_DESC" />
+				<field name="TweenDelay" type="text" default="100" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_TWEENDELAY" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_TWEENDELAY_DESC" />
+				<field type="spacer" name="@spacer02" hr="true" />
+				<field name="ZDistance" type="text" default="0" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ZDISTANCE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ZDISTANCE_DESC" />
+				<field name="Expand" type="text" default="20" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_EXPAND" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_EXPAND_DESC" />
+				<field name="InnerColor" type="colorpicker" default="#ffffff" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_INNERCOLOR" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_INNERCOLOR_DESC" />
+				<field type="spacer" name="@spacer05" hr="true" />
+				<field name="DescWidth" type="text" default="200" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCWIDTH" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCWIDTH_DESC" />
+				<field name="DescHeight" type="text" default="50" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCHEIGHT" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCHEIGHT_DESC" />
+				<field name="DescOffset" type="text" default="100" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCOFFSET" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCOFFSET_DESC" />
+				<field name="DescType" type="list" default="upDown" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCTYPE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_DESCTYPE_DESC">
+					<option value="upDown">MOD_VT_CU3OX_SLIDESHOW_OPTION_DESCTYPE_UPDOWN</option>
+					<option value="face">MOD_VT_CU3OX_SLIDESHOW_OPTION_DESCTYPE_FACE</option>
+				</field>
+				<field name="BorderRadius" type="text" default="5" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_BORDERRADIUS" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_BORDERRADIUS_DESC" />
+				<field name="TextBackground" type="colorpicker" default="#ffffff" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_TEXTBACKGROUND" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_TEXTBACKGROUND_DESC" />
+				<field name="TextDistance" type="text" default="3" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_TEXTDISTANCE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_TEXTDISTANCE_DESC" />
+				<field type="spacer" name="@spacer07" hr="true" />
+				<field name="StartBackground" type="colorpicker" default="#ffffff" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_STARTBACKGROUND" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_STARTBACKGROUND_DESC" />
+				<field name="NoLogo" type="radio" default="0" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_NOLOGO" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_NOLOGO_DESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
+				<field name="LogoFile" type="text" default="" size="70" readonly="false" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOFILE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOFILE_DESC" />
+				<field name="LogoText" type="text" default="" size="40" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOTEXT" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOTEXT_DESC" />
+				<field name="LogoLink" type="text" default="vinaora.com" size="40" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOLINK" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOLINK_DESC" />
+				<field type="spacer" name="@spacer09" hr="true" />
+				<field name="NoShadow" type="radio" default="1" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_NOSHADOW" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_NOSHADOW_DESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
+				<field name="ShadowDarkness" type="text" default="100" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_SHADOWDARKNESS" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_SHADOWDARKNESS_DESC" />
+				<field type="spacer" name="@spacer11" hr="true" />
+				<field name="ShowControls" type="radio" default="true" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_SHOWCONTROLS" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_SHOWCONTROLS_DESC">
+					<option value="true">JYES</option>
+					<option value="false">JNO</option>
+				</field>
+				<field name="AutoPlayDelay" type="text" default="3" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_AUTOPLAYDELAY" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_AUTOPLAYDELAY_DESC" />
+				<field name="AutoLoop" type="radio" default="1" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_AUTOLOOP" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_AUTOLOOP_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field type="spacer" name="@spacer12" hr="true" />
+				<field name="item_dir" type="folderlist" directory="images" filter="" exclude="" hide_none="0" hide_default="1" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_DIR" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_DIR_DESC" />
+				<field name="item_path" type="textarea" rows="5" cols="30" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_PATH" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_PATH_DESC" />
+				<field name="item_title" type="textarea" rows="5" cols="30" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_TITLE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_TITLE_DESC" />
+				<field name="item_description" type="textarea" rows="5" cols="30" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_DESCRIPTION" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_DESCRIPTION_DESC" />
+				<field name="item_url" type="textarea" rows="5" cols="30" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_URL" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_URL_DESC" />
+				<field name="item_target" type="list" default="_blank" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_TARGET" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_TARGET_DESC" >
+					<option value="_blank">MOD_VT_CU3OX_SLIDESHOW_OPTION_LINK_TARGET_BLANK</option>
+					<option value="_self">MOD_VT_CU3OX_SLIDESHOW_OPTION_LINK_TARGET_SELF</option>
+					<option value="_parent">MOD_VT_CU3OX_SLIDESHOW_OPTION_LINK_TARGET_PARENT</option>
+					<option value="_top">MOD_VT_CU3OX_SLIDESHOW_OPTION_LINK_TARGET_TOP</option>
+				</field>
+				<field name="item_rdirection" type="textarea" rows="5" cols="30" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_RDIRECTION" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_RDIRECTION_DESC" />
+				<field name="item_segments" type="textarea" rows="5" cols="30" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_SEGMENTS" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_ITEM_SEGMENTS_DESC" />
+			</fieldset>
+			<fieldset name="advanced">
+				<field name="moduleclass_sfx" type="text" size="40" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field name="cachemode" type="hidden" default="static">
+					<option value="static"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
 </extension>

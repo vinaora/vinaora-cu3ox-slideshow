@@ -17,17 +17,17 @@ defined('_JEXEC') or die;
 ?>
 
 <!-- BEGIN: Vinaora Cu3ox Slideshow >> http://vinaora.com/ -->
-<div id="cu3ox<?php echo $module_id; ?>" style="width:$CU3OX_WIDTH$px;height:$CU3OX_HEIGHT$px;margin:0 auto;text-align:center">
+<div id="cu3ox<?php echo $module_id; ?>" style="width:<?php echo $PanelWidth?>px;height:<?php echo $PanelHeight?>px;margin:0 auto;text-align:center">
 	<script language="JavaScript" type="text/javascript">
 		var cu3oxId = ("cu3ox" + Math.random()).replace(".","");
-		document.write('<div id ="' + cu3oxId + '" style="text-align:center;"><img src="<?php echo $first_image; ?>"/></div>');
+		document.write('<div id ="' + cu3oxId + '" style="text-align:center;"><img src="<?php echo $base_url.'/'.$FirstImage; ?>"/></div>');
 		if (swfobject.getFlashPlayerVersion().major)
 			swfobject.createSWF(
 			  {data:"<?php echo $swf; ?>", width:"100%", height:"100%" },
-			  {FlashVars:"images=<?php echo $images_path; ?>",menu:true, allowFullScreen:false, allowScriptAccess:'sameDomain', wmode:"transparent", bgcolor:'#FFFFFF', 
+			  {FlashVars:"images=<?php echo $base_url; ?>",menu:true, allowFullScreen:false, allowScriptAccess:'sameDomain', wmode:"transparent", bgcolor:'#FFFFFF', 
 			   devicefont:false, scale:'noscale', loop:true, play:true, quality:'high'}, cu3oxId);
 	</script>
-	<a style="display:none" href="http://vinaora.com">Joomla Slideshow</a>
+	<a href="http://vinaora.com">Cu3ox Slideshow for Joomla</a>
 	<noscript>
 		<!--[if !IE]> -->
 		<object type="application/x-shockwave-flash" data="<?php echo $swf; ?>" width="100%" height="100%"  align="middle">
@@ -37,12 +37,14 @@ defined('_JEXEC') or die;
 			width="100%" height="100%"  align="middle">
 			<param name="movie" value="<?php echo $swf; ?>" />
 		<!-->
-			<param name="FlashVars" value="images=<?php echo $images_path; ?>" />
-			<param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="false" />
-			<param name="quality" value="high"/><param name="scale" value="noscale"/>
+			<param name="FlashVars" value="images=<?php echo $base_url; ?>" />
+			<param name="allowScriptAccess" value="always" />
+			<param name="allowFullScreen" value="false" />
+			<param name="quality" value="high"/>
+			<param name="scale" value="noscale"/>
 			<param name="wmode" value="transparent" />	
 			<param name="bgcolor" value="#ffffff" />	
-			<img src="<?php echo $first_image; ?>"/>
+			<img src="<?php echo $base_url.'/'.$FirstImage; ?>"/>
 		</object>
 		<!-- <![endif]-->		
 	</noscript>
