@@ -70,7 +70,7 @@
 					<option value="0">JYES</option>
 					<option value="1">JNO</option>
 				</field>
-				<field name="LogoFile" type="filelist" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOFILE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOFILE_DESC" directory="images" filter="[^\s]+\.(?i)(png|gif|jpg|bmp)$" exclude="" stripext="" hide_none="0" hide_default="0"/>
+				<field name="LogoFile" type="filelist" default="" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOFILE" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOFILE_DESC" directory="images" filter="[^\s]+\.(?i)(png|gif|jpg|bmp)$" exclude="" stripext="" hide_none="1" hide_default="0"/>
 				<field name="LogoText" type="text" default="" size="40" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOTEXT" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOTEXT_DESC" />
 				<field name="LogoLink" type="text" default="vinaora.com" size="40" label="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOLINK" description="MOD_VT_CU3OX_SLIDESHOW_FIELD_LOGOLINK_DESC" />
 				<field type="spacer" name="@spacer09" hr="true" />
