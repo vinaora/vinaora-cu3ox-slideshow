@@ -87,7 +87,7 @@ class modVtCu3oxSlideshowHelper{
 		$params->set('StartBackground', $param);
 		
 		// Check the Logo File, Logo Text and Logo Link
-		$param	= ($params->get('LogoFile'), '\\/');
+		$param	= ltrim($params->get('LogoFile'), '\\/');
 		$logo	= JPath::clean(JPATH_BASE.DS.$param);
 		$param	= is_file($logo) ? JPath::clean($param, '/') : 'media/mod_vt_cu3ox_slideshow/images/logo.jpg';
 		$param	= rtrim(JURI::base(true), '/') . '/' . $param;
