@@ -22,44 +22,33 @@ class modVtCu3oxSlideshowHelper{
 
 	public static function &validParams( $params ){
 	
+		// Check the Dimension of your images
 		$param	= (int) $params->get('ImageWidth');
-		$param	= (!empty($param)) ? $param : '640';
+		$param	= ($param) ? $param : '640';
 		$params->set('ImageWidth', $param);
 		
 		$param	= (int) $params->get('ImageHeight');
-		$param	= (!empty($param)) ? $param : '480';
+		$param	= ($param) ? $param : '480';
 		$params->set('ImageHeight', $param);
 		
+		// Check the Number of Segments
+		$param	= (int) $params->get('Segments');
+		if( !$param ){
+			$param = (int) $params->get('SegmentsMax', '10');
+			$params->set('Segments', rand(1,$param));
+			$params->set('SegmentsDefault', '80');
+		}else{
+			$params->set('SegmentsDefault', $param);
+		}
+		
+		// Check the Duration and Delay Time of Transitions
 		$param	= trim($params->get('TweenTime', '1.2'));
 		$params->set('TweenTime', $param);
 		
 		$param	= (int) $params->get('TweenDelay', '0.1');
 		$params->set('TweenDelay', $param);
 		
-		$param	= (int) $params->get('ZDistance', '0');
-		$params->set('ZDistance', $param);
-		
-		$param	= (int) $params->get('Segments');
-		if( !$param ){
-			$param = (int) $params->get('SegmentsMax', '10');
-			$params->set('Segments', rand(1,$param));
-			$params->set('SegmentsDefault', '0');
-		}else{
-			$params->set('SegmentsDefault', $param);
-		}
-		
-		$param	= $params->get('InnerColor');
-		$param	= '0x'.ltrim($param, '#');
-		$params->set('InnerColor', $param);
-		
-		$param	= $params->get('TextBackground');
-		$param	= '0x'.ltrim($param, '#');
-		$params->set('TextBackground', $param);
-		
-		$param	= $params->get('StartBackground');
-		$param	= '0x'.ltrim($param, '#');
-		$params->set('StartBackground', $param);
-		
+		// Check the Transition Type
 		$TweenType	= "linear,"
 					. "easeInQuad,easeOutQuad,easeInOutQuad,easeOutInQuad,"
 					. "easeInCubic,easeOutCubic,easeInoutCubic,easeOutInCubic,"
@@ -77,11 +66,37 @@ class modVtCu3oxSlideshowHelper{
 		$param	= ( $param='random' ) ? $TweenType[array_rand($TweenType, 1)] : $param;
 		$params->set('TweenType', $param);
 		
-		$param	= ltrim($params->get('LogoFile'), '\\/');
+		// Check the Distance, Expand
+		$param	= (int) $params->get('ZDistance', '0');
+		$params->set('ZDistance', $param);
+		
+		$param	= (int) $params->get('Expand', '20');
+		$params->set('ZDistance', $param);
+		
+		// Check Color Format. Ensure that the prefix is '0x'
+		$param	= $params->get('InnerColor');
+		$param	= '0x'.ltrim($param, '#');
+		$params->set('InnerColor', $param);
+		
+		$param	= $params->get('TextBackground');
+		$param	= '0x'.ltrim($param, '#');
+		$params->set('TextBackground', $param);
+		
+		$param	= $params->get('StartBackground');
+		$param	= '0x'.ltrim($param, '#');
+		$params->set('StartBackground', $param);
+		
+		// Check the Logo File, Logo Text and Logo Link
+		$param	= ($params->get('LogoFile'), '\\/');
 		$logo	= JPath::clean(JPATH_BASE.DS.$param);
 		$param	= is_file($logo) ? JPath::clean($param, '/') : 'media/mod_vt_cu3ox_slideshow/images/logo.jpg';
 		$param	= rtrim(JURI::base(true), '/') . '/' . $param;
 		$params->set('LogoFile', $param);
+		
+		// Remove http(s) if exist in Logo's Link
+		$param	= trim($params->get('LogoLink'));
+		$param	= preg_replace('/^(?i)(https?):\/\//', '', $param);
+		$params->set('LogoLink', $param);
 		
 		$param	= self::_getImageSettings($params);
 		$params->set('ImageList', $param);
