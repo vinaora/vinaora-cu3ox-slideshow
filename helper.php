@@ -43,9 +43,11 @@ class modVtCu3oxSlideshowHelper{
 		
 		// Check the Duration and Delay Time of Transitions
 		$param	= trim($params->get('TweenTime', '1.2'));
+		$param	= str_replace(',', '.', $param);
 		$params->set('TweenTime', $param);
 		
 		$param	= (int) $params->get('TweenDelay', '0.1');
+		$param	= str_replace(',', '.', $param);
 		$params->set('TweenDelay', $param);
 		
 		// Check the Transition Type
@@ -218,9 +220,9 @@ class modVtCu3oxSlideshowHelper{
 			$nodeL2 =& $nodeL1->addChild('Settings');
 			
 			// Create Element - <Cu3ox>.<Image>.<Settings>.<goLink>
-			// $param	= $params->get('goLink');
 			$param	= $params->get('item_url');
 			$param	= self::getParam($param, $position+1, "\n");
+			$param	= trim($param);
 			$nodeL3 =& $nodeL2->addChild('goLink', $param);
 			$nodeL3->addAttribute('target', $params->get('item_target'));
 		
@@ -236,21 +238,19 @@ class modVtCu3oxSlideshowHelper{
 			$param	= $params->get('item_segments');
 			$param	= self::getParam($param, $position+1, "\n");
 			$param	= (int) $param;
-			$param	= (!empty($param)) ? $param : $params->get('SegmentsDefault');
-			$param	= (!empty($param)) ? $param : rand(1,$params->get('SegmentsMax'));
+			$param	= ($param) ? $param : $params->get('SegmentsDefault');
+			$param	= ($param) ? $param : rand(1, $params->get('SegmentsMax'));
 			$nodeL3 =& $nodeL2->addChild('segments', $param);
 			
 			// Create Element - <Cu3ox>.<Image>.<Text>
 			$nodeL2 =& $nodeL1->addChild('Text');
 				
 			// Create Element - <Cu3ox>.<Image>.<Text>.<headline>
-			// $param	= $params->get('headline');
 			$param	= $params->get('item_title');
 			$param	= self::getParam($param, $position+1, "\n");
 			$nodeL3 =& $nodeL2->addChild('headline', $param);
 			
 			// Create Element - <Cu3ox>.<Image>.<Text>.<paragraph>
-			// $param	= $params->get('paragraph');
 			$param	= $params->get('item_description');
 			$param	= self::getParam($param, $position+1, "\n");
 			$nodeL3 =& $nodeL2->addChild('paragraph', $param);

@@ -106,7 +106,7 @@
 				<field type="spacer" name="@cqb4meelc8" hr="true" />
 				<field name="HeadColor" type="colorpicker" default="#ffffff" label="MOD_VT_CU3OX_SLIDESHOW_HEADCOLOR" description="MOD_VT_CU3OX_SLIDESHOW_HEADCOLOR_DESC" />
 				<field name="HeadFontSize" type="text" default="16" label="MOD_VT_CU3OX_SLIDESHOW_HEADFONTSIZE" description="MOD_VT_CU3OX_SLIDESHOW_HEADFONTSIZE_DESC" />
-				<field name="HeadFontFamily" type="text" default="Georgia,'Times New Roman',Times,serif" label="MOD_VT_CU3OX_SLIDESHOW_HEADFONTFAMILY" description="MOD_VT_CU3OX_SLIDESHOW_HEADFONTFAMILY_DESC" />
+				<field name="HeadFontFamily" type="text" default="Georgia,'Times New Roman',Times,serif" label="MOD_VT_CU3OX_SLIDESHOW_HEADFONTFAMILY" description="MOD_VT_CU3OX_SLIDESHOW_HEADFONTFAMILY_DESC" size="50" />
 				<field name="HeadFontStyle" type="list" default="normal" label="MOD_VT_CU3OX_SLIDESHOW_HEADFONTSTYLE" description="MOD_VT_CU3OX_SLIDESHOW_HEADFONTSTYLE_DESC" >
 					<option value="normal">normal</option>
 					<option value="italic">italic</option>
@@ -129,7 +129,7 @@
 				<field type="spacer" name="@jw7su02m0u" hr="true" />
 				<field name="ParaColor" type="colorpicker" default="#ffff77" label="MOD_VT_CU3OX_SLIDESHOW_PARACOLOR" description="MOD_VT_CU3OX_SLIDESHOW_PARACOLOR_DESC" />
 				<field name="ParaFontSize" type="text" default="12" label="MOD_VT_CU3OX_SLIDESHOW_PARAFONTSIZE" description="MOD_VT_CU3OX_SLIDESHOW_PARAFONTSIZE_DESC" />
-				<field name="ParaFontFamily" type="text" default="Georgia,'Times New Roman',Times,serif" label="MOD_VT_CU3OX_SLIDESHOW_PARAFONTFAMILY" description="MOD_VT_CU3OX_SLIDESHOW_PARAFONTFAMILY_DESC" />
+				<field name="ParaFontFamily" type="text" default="Georgia,'Times New Roman',Times,serif" label="MOD_VT_CU3OX_SLIDESHOW_PARAFONTFAMILY" description="MOD_VT_CU3OX_SLIDESHOW_PARAFONTFAMILY_DESC" size="50" />
 				<field name="ParaFontStyle" type="list" default="normal" label="MOD_VT_CU3OX_SLIDESHOW_PARAFONTSTYLE" description="MOD_VT_CU3OX_SLIDESHOW_PARAFONTSTYLE_DESC" >
 					<option value="normal">normal</option>
 					<option value="italic">italic</option>
