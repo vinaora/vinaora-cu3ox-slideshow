@@ -99,6 +99,14 @@ class modVtCu3oxSlideshowHelper{
 		$param	= preg_replace('/^(?i)(https?):\/\//', '', $param);
 		$params->set('LogoLink', $param);
 		
+		$param	= trim($params->get('HeadFontSize'));
+		$param	= rtrim($param, 'px').'px';
+		$params->set('HeadFontSize', $param);
+		
+		$param	= trim($params->get('ParaFontSize'));
+		$param	= rtrim($param, 'px').'px';
+		$params->set('ParaFontSize', $param);
+		
 		$param	= self::_getImageSettings($params);
 		$params->set('ImageList', $param);
 		
