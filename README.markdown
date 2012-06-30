@@ -3,6 +3,9 @@ Vinaora Cu3ox Slideshow
 
 [Vinaora Cu3ox Slideshow](http://vinaora.com/vinaora-cu3ox-slideshow/) is a slideshow module for Joomla. With Vinaora Cu3ox Slideshow you can create an attractive Joomla image slider with cool 3D slice effects and transitions between slides. You'll be able to divide your images into any number of pieces and rotate them the way you like! Vinaora Cu3ox Slideshow uses the Tweener engine, which makes it support several tween types for the transitions, such as Cubic, Bounce or Elastic. Use Vinaora Cu3ox Slideshow to create content slider, image galleries, image & banner rotator for your Joomla website.
 
+* Homepage: http://vinaora.com/vinaora-cu3ox-slideshow/
+* Demo: http://demo.vinaora.com/vinaora-cu3ox-slideshow/
+
 Key Features
 ------------
 * Customize the number of pieces, tween type, z-distance, distance, time, delay and more. Horizontal or vertical cubing.
