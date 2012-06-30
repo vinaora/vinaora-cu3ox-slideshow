@@ -21,7 +21,7 @@ require_once dirname(__FILE__).DS.'helper.php';
 // Add SWFObject library. Check SWFObject loaded or not.
 $app = JFactory::getApplication();
 $sobjsource		= $params->get('swfobject_source', 'local');
-$sobjversion	= $params->get('swfobject_version', '2.2');
+$sobjversion	= $params->get('swfobject_version', 'latest');
 
 if($app->get('swfobject') == false) {
 	modVtCu3oxSlideshowHelper::addSWFObject( $sobjsource, $sobjversion );

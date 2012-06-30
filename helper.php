@@ -358,7 +358,9 @@ class modVtCu3oxSlideshowHelper{
 	/*
 	 * Add SWFObject Library to <head> tag
 	 */
-	public static function addSWFObject($source='local', $version='2.2'){
+	public static function addSWFObject($source='local', $version='latest'){
+		
+		$version = ($version != 'latest') ? $version : '2.2';
 
 		switch($source){
 
