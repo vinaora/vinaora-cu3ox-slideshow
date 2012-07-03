@@ -22,7 +22,7 @@ class JFormFieldLastEdit extends JFormField {
 	protected $type = 'LastEdit';
 
 	public function getInput() {
-		return '<input id="'.$this->id.'" name="'.$this->name.'" value="'.mktime().'" type="hidden" />';
+		return '<input id="'.$this->id.'" name="'.$this->name.'" value="'.time().'" type="hidden" />';
 	}
 
 	public function getLabel(){
