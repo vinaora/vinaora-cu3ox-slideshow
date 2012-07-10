@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: mod_vt_cu3ox_slideshow.php 2012-06-20 vinaora $
+ * @version		$Id: mod_vt_cu3ox_slideshow.php 2012-07-14 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
  * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
