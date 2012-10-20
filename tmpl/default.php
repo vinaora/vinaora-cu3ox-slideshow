@@ -27,7 +27,6 @@ defined('_JEXEC') or die;
 			  {FlashVars:"images=<?php echo JURI::base(); ?>",menu:true, allowFullScreen:false, allowScriptAccess:'sameDomain', wmode:"transparent", bgcolor:'#FFFFFF', 
 			   devicefont:false, scale:'noscale', loop:true, play:true, quality:'high'}, cu3oxId);
 	</script>
-	<a href="http://vinaora.com/vinaora-cu3ox-slideshow/">Cu3ox Slideshow for Joomla</a>
 	<noscript>
 		<!--[if !IE]> -->
 		<object type="application/x-shockwave-flash" data="<?php echo $swf; ?>" width="100%" height="100%"  align="middle">
