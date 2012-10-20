@@ -2,12 +2,12 @@
 <extension type="module" version="2.5.0" client="site" method="upgrade">
 	<name>Vinaora Cu3ox Slideshow</name>
 	<author>VINAORA</author>
-	<creationDate>July 2012</creationDate>
+	<creationDate>Oct 2012</creationDate>
 	<copyright>Copyright (C) 2012 VINAORA. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>info@vinaora.com</authorEmail>
 	<authorUrl>http://vinaora.com</authorUrl>
-	<version>2.5.0</version>
+	<version>2.5.1</version>
 	<description>MOD_VT_CU3OX_SLIDESHOW_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_vt_cu3ox_slideshow">mod_vt_cu3ox_slideshow.php</filename>
@@ -22,8 +22,10 @@
 	<media folder="media" destination="mod_vt_cu3ox_slideshow">
 		<filename>index.html</filename>
 		<filename>intro.html</filename>
+		<folder>images</folder>
 		<folder>js</folder>
 		<folder>templates</folder>
+		<folder>transition</folder>
 	</media>
 
 	<languages>
