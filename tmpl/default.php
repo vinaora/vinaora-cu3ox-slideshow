@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 2012-06-20 vinaora $
+ * @version		$Id: default.php 2012-10-20 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
  * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
@@ -20,14 +20,14 @@ defined('_JEXEC') or die;
 <div id="cu3ox<?php echo $module_id; ?>" style="width:<?php echo $PanelWidth?>px;height:<?php echo $PanelHeight?>px;margin:0 auto;text-align:center">
 	<script language="JavaScript" type="text/javascript">
 		var cu3oxId = ("cu3ox" + Math.random()).replace(".","");
-		document.write('<div id ="' + cu3oxId + '" style="text-align:center;"><img src="<?php echo $base_url.'/'.$FirstImage; ?>"/></div>');
+		document.write('<div id ="' + cu3oxId + '" style="text-align:center;"><img src="<?php echo $base_url.'/'.$FirstImage; ?>" alt="Vinaora Cu3ox Slideshow"/></div>');
 		if (swfobject.getFlashPlayerVersion().major)
 			swfobject.createSWF(
 			  {data:"<?php echo $swf; ?>", width:"100%", height:"100%" },
-			  {FlashVars:"images=<?php echo $base_url; ?>",menu:true, allowFullScreen:false, allowScriptAccess:'sameDomain', wmode:"transparent", bgcolor:'#FFFFFF', 
+			  {FlashVars:"images=<?php echo JURI::base(); ?>",menu:true, allowFullScreen:false, allowScriptAccess:'sameDomain', wmode:"transparent", bgcolor:'#FFFFFF', 
 			   devicefont:false, scale:'noscale', loop:true, play:true, quality:'high'}, cu3oxId);
 	</script>
-	<a href="http://vinaora.com">Cu3ox Slideshow for Joomla</a>
+	<a href="http://vinaora.com/vinaora-cu3ox-slideshow/">Cu3ox Slideshow for Joomla</a>
 	<noscript>
 		<!--[if !IE]> -->
 		<object type="application/x-shockwave-flash" data="<?php echo $swf; ?>" width="100%" height="100%"  align="middle">
@@ -37,14 +37,14 @@ defined('_JEXEC') or die;
 			width="100%" height="100%"  align="middle">
 			<param name="movie" value="<?php echo $swf; ?>" />
 		<!-->
-			<param name="FlashVars" value="images=<?php echo $base_url; ?>" />
+			<param name="FlashVars" value="images=<?php echo JURI::base(); ?>" />
 			<param name="allowScriptAccess" value="always" />
 			<param name="allowFullScreen" value="false" />
 			<param name="quality" value="high"/>
 			<param name="scale" value="noscale"/>
 			<param name="wmode" value="transparent" />	
 			<param name="bgcolor" value="#ffffff" />	
-			<img src="<?php echo $base_url.'/'.$FirstImage; ?>"/>
+			<img src="<?php echo $base_url.'/'.$FirstImage; ?>" alt="Vinaora Cu3ox Slideshow"/>
 		</object>
 		<!-- <![endif]-->		
 	</noscript>
