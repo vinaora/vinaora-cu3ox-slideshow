@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: helper.php 2012-06-20 vinaora $
+ * @version		$Id: helper.php 2012-10-21 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
  * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
@@ -125,12 +125,12 @@ class modVtCu3oxSlideshowHelper{
 		$path	= JPath::clean($path);
 		if( !is_dir($path) ){
 			JFolder::create($path);
-			JFile::write($path.DS.'index.html', $buffer);
+			JFile::write($path.DIRECTORY_SEPARATOR.'index.html', $buffer);
 			
-			$path = $path.DS.'engine';
+			$path = $path.DIRECTORY_SEPARATOR.'engine';
 			if( !is_dir($path) ){
 				JFolder::create($path);
-				JFile::write($path.DS.'index.html', $buffer);
+				JFile::write($path.DIRECTORY_SEPARATOR.'index.html', $buffer);
 			}
 		}
 		
@@ -143,7 +143,7 @@ class modVtCu3oxSlideshowHelper{
 		$params->set('EngineURL', $EngineURL);
 		
 		$cache_time	= (int) $params->get('cache_time', '900');
-		$log		= $EnginePath.DS.$params->get('lastedit').'.log';
+		$log		= $EnginePath.DIRECTORY_SEPARATOR.$params->get('lastedit').'.log';
 		
 		// Check the file log is exist or not. If exists then check the created time
 		if( !is_file($log) || ( (int) JFile::read($log) + $cache_time < time()) ){
@@ -153,7 +153,7 @@ class modVtCu3oxSlideshowHelper{
 			self::_makeSWF($params);
 			
 			$buffer = time();
-			JFile::write($EnginePath.DS.$params->get('lastedit').'.log', $buffer);
+			JFile::write($EnginePath.DIRECTORY_SEPARATOR.$params->get('lastedit').'.log', $buffer);
 		}
 	}
 	
@@ -163,7 +163,7 @@ class modVtCu3oxSlideshowHelper{
 	private static function _makeSWF( $params ){
 		$src = JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3ox.swf';
 		$src = JPath::clean($src);
-		JFile::copy($src, $params->get('EnginePath').DS.'vt_cu3ox_slideshow.swf');
+		JFile::copy($src, $params->get('EnginePath').DIRECTORY_SEPARATOR.'vt_cu3ox_slideshow.swf');
 	}
 
 	/*
@@ -181,7 +181,7 @@ class modVtCu3oxSlideshowHelper{
 		$node	= new SimpleXMLElement($str);
 		
 		// Make file XML
-		$path	= $params->get('EnginePath').DS.'vt_cu3ox_slideshowXML.xml';
+		$path	= $params->get('EnginePath').DIRECTORY_SEPARATOR.'vt_cu3ox_slideshowXML.xml';
 		JFile::write( $path, $node->asXML());
 	}
 	
@@ -198,7 +198,7 @@ class modVtCu3oxSlideshowHelper{
 		$str	= preg_replace( "/\\$(\w+)\\$/e", '$params->get("$1")', $str );
 		
 		// Make file CSS
-		$path	= $params->get('EnginePath').DS.'vt_cu3ox_slideshowCSS.css';
+		$path	= $params->get('EnginePath').DIRECTORY_SEPARATOR.'vt_cu3ox_slideshowCSS.css';
 		JFile::write( $path, $str);
 	}
 	
@@ -293,9 +293,9 @@ class modVtCu3oxSlideshowHelper{
 			$exclude	= array('index.html', '.svn', 'CVS', '.DS_Store', '__MACOSX', '.htaccess');
 			$excludefilter = array();
 
-			$param	= JFolder::files(JPATH_BASE.DS.'images'.DS.$param, $filter, true, true, $exclude, $excludefilter);
+			$param	= JFolder::files(JPATH_BASE.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$param, $filter, true, true, $exclude, $excludefilter);
 			foreach($param as $key=>$value){
-				$value = substr($value, strlen(JPATH_BASE.DS) - strlen($value));
+				$value = substr($value, strlen(JPATH_BASE.DIRECTORY_SEPARATOR) - strlen($value));
 				$param[$key] = self::validPath($value, $absolute);
 			}
 		}
@@ -323,9 +323,9 @@ class modVtCu3oxSlideshowHelper{
 			else return $path;
 		}
 
-		$path = JPath::clean($path, DS);
-		$path = ltrim($path, DS);
-		if (!is_file(JPATH_BASE.DS.$path)) return '';
+		$path = JPath::clean($path, DIRECTORY_SEPARATOR);
+		$path = ltrim($path, DIRECTORY_SEPARATOR);
+		if (!is_file(JPATH_BASE.DIRECTORY_SEPARATOR.$path)) return '';
 
 		// Convert it to url path
 		$path = $absolute ? JPath::clean(JURI::base(true)."/".$path, "/") : JPath::clean($path, '/');

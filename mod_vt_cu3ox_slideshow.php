@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: mod_vt_cu3ox_slideshow.php 2012-07-14 vinaora $
+ * @version		$Id: mod_vt_cu3ox_slideshow.php 2012-10-21 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
  * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 // Require the base helper class only once
-require_once dirname(__FILE__).DS.'helper.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helper.php';
 
 // Add SWFObject library. Check SWFObject loaded or not.
 $app = JFactory::getApplication();
