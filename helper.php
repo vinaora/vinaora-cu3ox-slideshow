@@ -90,7 +90,7 @@ class modVtCu3oxSlideshowHelper{
 		
 		// Check the Logo File, Logo Text and Logo Link
 		$param	= $params->get('LogoFile');
-		$param	= $param ? '/images/'.$param : '/media/mod_vt_cu3ox_slideshow/images/logo.jpg';
+		$param	= $param ? '/images/'.$param : '/media/mod_vt_cu3ox_slideshow/images/logo.png';
 		$param	= rtrim(JURI::base(true), '/') . $param;
 		$params->set('LogoFile', $param);
 		
