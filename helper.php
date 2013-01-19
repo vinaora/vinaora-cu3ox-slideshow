@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: helper.php 2012-10-21 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
- * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
+ * @copyright	Copyright (C) 2012-2013 VINAORA. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  *
  * @website		http://vinaora.com
@@ -20,7 +19,7 @@ class modVtCu3oxSlideshowHelper{
 	function __construct(){
 	}
 
-	public static function &validParams( $params ){
+	public static function &validParams(&$params){
 	
 		// Check the Dimension of your images
 		$param	= (int) $params->get('ImageWidth');
@@ -36,7 +35,6 @@ class modVtCu3oxSlideshowHelper{
 		if( !$param ){
 			$param = (int) $params->get('SegmentsMax', '10');
 			$params->set('Segments', rand(1,$param));
-			$params->set('SegmentsDefault', '80');
 		}else{
 			$params->set('SegmentsDefault', $param);
 		}
@@ -46,7 +44,7 @@ class modVtCu3oxSlideshowHelper{
 		$param	= str_replace(',', '.', $param);
 		$params->set('TweenTime', $param);
 		
-		$param	= (int) $params->get('TweenDelay', '0.1');
+		$param	= trim($params->get('TweenDelay', '0.1'));
 		$param	= str_replace(',', '.', $param);
 		$params->set('TweenDelay', $param);
 		
@@ -65,7 +63,7 @@ class modVtCu3oxSlideshowHelper{
 
 		$TweenType	= explode(",", $TweenType);
 		$param	= $params->get('TweenType');
-		$param	= ( $param='random' ) ? $TweenType[array_rand($TweenType, 1)] : $param;
+		$param	= ( $param == 'random' ) ? $TweenType[array_rand($TweenType, 1)] : $param;
 		$params->set('TweenType', $param);
 		
 		// Check the Distance, Expand
@@ -107,72 +105,81 @@ class modVtCu3oxSlideshowHelper{
 		$param	= rtrim($param, 'px').'px';
 		$params->set('ParaFontSize', $param);
 		
-		$param	= self::_getImageSettings($params);
-		$params->set('ImageList', $param);
-		
 		return $params;
 	}
 	
-	/*
+	/**
 	 * Make the XML, CSS, SWF files for Cu3ox Slideshow
 	 */
-	public static function makeFiles( $params ){
+	public static function makeFiles( &$params, $module_id ){
+	
+		$module_id = (int) $module_id;
 		
-		$buffer = '<!DOCTYPE html><title></title>';
-		
-		// Make directory /media/mod_vt_cu3ox_slideshow/[module_id]/ if not exist
-		$path	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/'.$params->get('ID');
+		// Make a directory /media/mod_vt_cu3ox_slideshow/[module_id]/ and needed folders/files if not exist
+		$path	= JPATH_BASE . "/media/mod_vt_cu3ox_slideshow/$module_id";
 		$path	= JPath::clean($path);
+		
 		if( !is_dir($path) ){
-			JFolder::create($path);
-			JFile::write($path.DIRECTORY_SEPARATOR.'index.html', $buffer);
-			
-			$path = $path.DIRECTORY_SEPARATOR.'engine';
-			if( !is_dir($path) ){
-				JFolder::create($path);
-				JFile::write($path.DIRECTORY_SEPARATOR.'index.html', $buffer);
-			}
+			$buffer = "<!DOCTYPE html><title></title>\n";
+			JFile::write( "$path/index.html", $buffer);
+			JFile::write( "$path/engine/index.html", $buffer);
 		}
 		
-		$EnginePath	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/'.$params->get('ID').'/engine';
+		$EnginePath	= "$path/engine";
 		$EnginePath	= JPath::clean($EnginePath);
 		$params->set('EnginePath', $EnginePath);
 		
-		$EngineURL	= JURI::base(true).'/media/mod_vt_cu3ox_slideshow/'.$params->get('ID').'/engine';
+		$EngineURL	= JURI::base(true) . "/media/mod_vt_cu3ox_slideshow/$module_id/engine";
 		$EngineURL	= JPath::clean($EngineURL, '/');
 		$params->set('EngineURL', $EngineURL);
 		
 		$cache_time	= (int) $params->get('cache_time', '900');
-		$log		= $EnginePath.DIRECTORY_SEPARATOR.$params->get('lastedit').'.log';
+		$lastedit	= $params->get('lastedit');
+		$log		= $EnginePath . "/$lastedit.log";
 		
-		// Check the file log is exist or not. If exists then check the created time
-		if( !is_file($log) || ( (int) JFile::read($log) + $cache_time < time()) ){
+		// The file log is exist or not. If exists then check the created time
+		if( !is_file($log) || ( (int) file_get_contents($log) + $cache_time < time()) ){
 		
+			$params =& self::validParams($params);
+			$params =& self::_makeImageSettings($params);
+
 			self::_makeXML($params);
 			self::_makeCSS($params);
 			self::_makeSWF($params);
 			
-			$buffer = time();
-			JFile::write($EnginePath.DIRECTORY_SEPARATOR.$params->get('lastedit').'.log', $buffer);
+			// Remove old log file
+			$filter		= '(^[0-9]+\.log$)';
+			$exclude	= array("$lastedit.log");
+			$files		= JFolder::files($EnginePath, $filter, true, true, $exclude);
+			if(count($files)) JFile::delete($files);
+			
+			// Log the current time
+			JFile::write($log, time());
 		}
+		return;
 	}
 	
-	/*
+	/**
 	 * Make the Cu3ox SWF file in the directory /media/mod_vt_cu3ox_slideshow/[id]/engine/
 	 */
 	private static function _makeSWF( $params ){
-		$src = JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3ox.swf';
-		$src = JPath::clean($src);
-		JFile::copy($src, $params->get('EnginePath').DIRECTORY_SEPARATOR.'vt_cu3ox_slideshow.swf');
+		$src	= JPATH_BASE . '/media/mod_vt_cu3ox_slideshow/templates/cu3ox.swf';
+		$src	= JPath::clean($src);
+		
+		$dest	= $params->get('EnginePath') . '/vt_cu3ox_slideshow.swf';
+		$dest	= JPath::clean($dest);
+		
+		JFile::copy($src, $dest);
 	}
 
-	/*
+	/**
 	 * Make the Config XML file in the directory /media/mod_vt_cu3ox_slideshow/[id]/engine/
 	 */	
 	private static function _makeXML( $params ){
 
-		$path	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3oxXML.xml';
+		$path	= JPATH_BASE . '/media/mod_vt_cu3ox_slideshow/templates/cu3oxXML.xml';
 		$path	= JPath::clean( $path );
+		
 		$str	= file_get_contents( $path );
 		
 		// Replace XML variables
@@ -181,92 +188,112 @@ class modVtCu3oxSlideshowHelper{
 		$node	= new SimpleXMLElement($str);
 		
 		// Make file XML
-		$path	= $params->get('EnginePath').DIRECTORY_SEPARATOR.'vt_cu3ox_slideshowXML.xml';
-		JFile::write( $path, $node->asXML());
+		$path	= $params->get('EnginePath') . '/vt_cu3ox_slideshowXML.xml';
+		$path	= JPath::clean( $path );
+		
+		JFile::write( $path, $node->asXML() );
 	}
 	
-	/*
+	/**
 	 * Make the Main CSS file in the directory /media/mod_vt_cu3ox_slideshow/[id]/engine/
 	 */
 	private static function _makeCSS( $params ){
 		
-		$path	= JPATH_BASE.'/media/mod_vt_cu3ox_slideshow/templates/cu3oxCSS.css';
+		$path	= JPATH_BASE . '/media/mod_vt_cu3ox_slideshow/templates/cu3oxCSS.css';
 		$path	= JPath::clean( $path );
+		
 		$str	= file_get_contents( $path );
 		
 		// Replace CSS variables
 		$str	= preg_replace( "/\\$(\w+)\\$/e", '$params->get("$1")', $str );
 		
 		// Make file CSS
-		$path	= $params->get('EnginePath').DIRECTORY_SEPARATOR.'vt_cu3ox_slideshowCSS.css';
-		JFile::write( $path, $str);
+		$path	= $params->get('EnginePath') . '/vt_cu3ox_slideshowCSS.css';
+		$path	= JPath::clean( $path );
+		
+		JFile::write( $path, $str );
 	}
 	
-	/*
-	 * Get the Image List Settings
+	/**
+	 * Make the List of Image Settings
 	 */
-	private static function _getImageSettings( $params ){
+	private static function &_makeImageSettings( $params ){
 		$str = '';
 		
 		// Create Element - <Cu3ox>
 		$node = new SimpleXMLElement('<Cu3ox />');
 		
-		// Get all images relative paths
+		// Get all relative paths of images
 		$images = self::getItems($params, false);
 		
-		if(empty($images) || !count($images)) return $str;
-
-		$params->set('FirstImage', $images[0]);
-		
-		foreach($images as $position=>$image){
-
-			// Create Element - <Cu3ox>.<Image>
-			$nodeL1 =& $node->addChild('Image');
-			$nodeL1->addAttribute('Filename', $image);
-
-			// Create Element - <Cu3ox>.<Image>.<Settings>
-			$nodeL2 =& $nodeL1->addChild('Settings');
+		if( is_array($images) && count($images) ){
 			
-			// Create Element - <Cu3ox>.<Image>.<Settings>.<goLink>
-			$param	= $params->get('item_url');
-			$param	= self::getParam($param, $position+1, "\n");
-			$param	= trim($param);
-			$nodeL3 =& $nodeL2->addChild('goLink', $param);
-			$nodeL3->addAttribute('target', $params->get('item_target'));
-		
-			// Create Element - <Cu3ox>.<Image>.<Settings>.<rDirection>
-			$param	= $params->get('item_rdirection');
-			$param	= self::getParam($param, $position+1, "\n");
-			$param	= strtolower(trim($param));
-			$param	= ( in_array($param, array("left,right,up,down,random")) ) ? $param : $params->get('RDirection');
-			$param	= ($param != 'random') ? $param : '';
-			$nodeL3 =& $nodeL2->addChild('rDirection', $param);
-		
-			// Create Element - <Cu3ox>.<Image>.<Settings>.<segments>
-			$param	= $params->get('item_segments');
-			$param	= self::getParam($param, $position+1, "\n");
-			$param	= (int) $param;
-			$param	= ($param) ? $param : $params->get('SegmentsDefault');
-			$param	= ($param) ? $param : rand(1, $params->get('SegmentsMax'));
-			$nodeL3 =& $nodeL2->addChild('segments', $param);
-			
-			// Create Element - <Cu3ox>.<Image>.<Text>
-			$nodeL2 =& $nodeL1->addChild('Text');
+			foreach($images as $position=>$image){
+
+				// Create Element - <Cu3ox>.<Image>
+				$nodeL1 =& $node->addChild('Image');
+				$nodeL1->addAttribute('Filename', $image);
+
+				// Create Element - <Cu3ox>.<Image>.<Settings>
+				$nodeL2 =& $nodeL1->addChild('Settings');
 				
-			// Create Element - <Cu3ox>.<Image>.<Text>.<headline>
-			$param	= $params->get('item_title');
-			$param	= self::getParam($param, $position+1, "\n");
-			$nodeL3 =& $nodeL2->addChild('headline', $param);
+				// Create Element - <Cu3ox>.<Image>.<Settings>.<goLink>
+				$param	= $params->get('item_url');
+				$param	= self::getParam($param, $position+1, "\n");
+				$param	= trim($param);
+				$nodeL3 =& $nodeL2->addChild('goLink', $param);
+				$nodeL3->addAttribute('target', $params->get('item_target'));
 			
-			// Create Element - <Cu3ox>.<Image>.<Text>.<paragraph>
-			$param	= $params->get('item_description');
-			$param	= self::getParam($param, $position+1, "\n");
-			$nodeL3 =& $nodeL2->addChild('paragraph', $param);
+				// Create Element - <Cu3ox>.<Image>.<Settings>.<rDirection>
+				$param	= $params->get('item_rdirection');
+				$param	= self::getParam($param, $position+1, "\n");
+				$param	= strtolower(trim($param));
+				$param	= ( in_array($param, array('left','right','up','down','random')) ) ? $param : $params->get('RDirection');
+				$param	= ($param != 'random') ? $param : '';
+				$nodeL3 =& $nodeL2->addChild('rDirection', $param);
 			
-			$str .= $nodeL1->asXML();
+				// Create Element - <Cu3ox>.<Image>.<Settings>.<segments>
+				$param	= $params->get('item_segments', '0');
+				$param	= self::getParam($param, $position+1, "\n");
+				$param	= (int) $param;
+				
+				$SegmentsDefault	= (int) $params->get('SegmentsDefault');
+				$SegmentsMax		= (int) $params->get('SegmentsMax');
+				$param	= ($param) ? $param : $SegmentsDefault ;
+				
+				$param	= ($param) ? $param : mt_rand(1, $SegmentsMax);
+				$nodeL3 =& $nodeL2->addChild('segments', $param);
+				
+				// Create Element - <Cu3ox>.<Image>.<Text>
+				$nodeL2 =& $nodeL1->addChild('Text');
+					
+				// Create Element - <Cu3ox>.<Image>.<Text>.<headline>
+				$param	= $params->get('item_title');
+				$param	= self::getParam($param, $position+1, "\n");
+				$nodeL3 =& $nodeL2->addChild('headline', $param);
+				
+				// Create Element - <Cu3ox>.<Image>.<Text>.<paragraph>
+				$param	= $params->get('item_description');
+				$param	= self::getParam($param, $position+1, "\n");
+				$nodeL3 =& $nodeL2->addChild('paragraph', $param);
+				
+				$str .= $nodeL1->asXML();
+			}
 		}
+
+		$params->set('ImageList', $str);
+		return $params;
+	}
+
+	/**
+	 * Get the First Image
+	 */
+	public static function getFirstItem( $params ){
+		// Get all relative paths of images
+		$images = self::getItems($params, false);
 		
-		return $str;
+		if( is_array($images) && count($images) ) return $images[0];
+		return '';
 	}
 
 	/*

@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: default.php 2012-10-20 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
- * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
+ * @copyright	Copyright (C) 2012-2013 VINAORA. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  *
  * @website		http://vinaora.com
@@ -17,10 +16,10 @@ defined('_JEXEC') or die;
 ?>
 
 <!-- BEGIN: Vinaora Cu3ox Slideshow >> http://vinaora.com/ -->
-<div id="cu3ox<?php echo $module_id; ?>" style="width:<?php echo $PanelWidth?>px;height:<?php echo $PanelHeight?>px;margin:0 auto;text-align:center">
+<div id="cu3ox<?php echo $module_id; ?>" style="width:<?php echo $PanelWidth; ?>px;height:<?php echo $PanelHeight; ?>px;margin:0 auto;text-align:center;">
 	<script language="JavaScript" type="text/javascript">
 		var cu3oxId = ("cu3ox" + Math.random()).replace(".","");
-		document.write('<div id ="' + cu3oxId + '" style="text-align:center;"><img src="<?php echo $base_url.'/'.$FirstImage; ?>" alt="Vinaora Cu3ox Slideshow"/></div>');
+		document.write('<div id ="' + cu3oxId + '" style="text-align:center;"><?php echo $FirstImage; ?></div>');
 		if (swfobject.getFlashPlayerVersion().major)
 			swfobject.createSWF(
 			  {data:"<?php echo $swf; ?>", width:"100%", height:"100%" },
@@ -41,11 +40,12 @@ defined('_JEXEC') or die;
 			<param name="allowFullScreen" value="false" />
 			<param name="quality" value="high"/>
 			<param name="scale" value="noscale"/>
-			<param name="wmode" value="transparent" />	
-			<param name="bgcolor" value="#ffffff" />	
-			<img src="<?php echo $base_url.'/'.$FirstImage; ?>" alt="Vinaora Cu3ox Slideshow"/>
+			<param name="wmode" value="transparent" />
+			<param name="bgcolor" value="#ffffff" />
+			<?php echo $FirstImage; ?>
 		</object>
-		<!-- <![endif]-->		
+		<!-- <![endif]-->
+		<a href="http://vinaora.com" style="display:none">Free 3D Joomla Slideshow</a>	
 	</noscript>
 </div>
 <!-- END: Vinaora Cu3ox Slideshow >> http://vinaora.com/ -->

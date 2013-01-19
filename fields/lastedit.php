@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: lastedit.php 2012-06-20 vinaora $
- * @package		VINAORA NICE SLIDESHOW
- * @subpackage	mod_vt_nice_slideshow
- * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
+ * @package		VINAORA CU3OX SLIDESHOW
+ * @subpackage	mod_vt_cu3ox_slideshow
+ * @copyright	Copyright (C) 2012-2013 VINAORA. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  *
  * @website		http://vinaora.com

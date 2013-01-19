@@ -1,9 +1,8 @@
 <?php
 /**
- * @version		$Id: mod_vt_cu3ox_slideshow.php 2012-10-21 vinaora $
  * @package		VINAORA CU3OX SLIDESHOW
  * @subpackage	mod_vt_cu3ox_slideshow
- * @copyright	Copyright (C) 2012 VINAORA. All rights reserved.
+ * @copyright	Copyright (C) 2012-2013 VINAORA. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  *
  * @website		http://vinaora.com
@@ -16,34 +15,40 @@
 defined('_JEXEC') or die;
 
 // Require the base helper class only once
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helper.php';
+require_once dirname(__FILE__) . '/helper.php';
 
 // Add SWFObject library. Check SWFObject loaded or not.
-$app = JFactory::getApplication();
+$app =& JFactory::getApplication();
 $sobjsource		= $params->get('swfobject_source', 'local');
 $sobjversion	= $params->get('swfobject_version', 'latest');
 
-if($app->get('swfobject') == false) {
+if(!isset($app->swfobject) || $app->swfobject === false) {
 	modVtCu3oxSlideshowHelper::addSWFObject( $sobjsource, $sobjversion );
-	$app->set('swfobject', true);
+	$app->swfobject = true;
 }
 
 $module_id	= $module->id;
-$params->set('ID', $module->id);
-
 $base_url	= rtrim(JURI::base(true), '/');
 
-modVtCu3oxSlideshowHelper::validParams( $params );
-modVtCu3oxSlideshowHelper::makeFiles( $params );
+modVtCu3oxSlideshowHelper::makeFiles( $params, $module_id );
 
-$FirstImage 	= $params->get('FirstImage');
-$swf			= $params->get('EngineURL').'/vt_cu3ox_slideshow.swf';
-if($params->get('NoShadow') == '1'){
-	$PanelWidth		= $params->get('ImageWidth');
-	$PanelHeight	= $params->get('ImageHeight');
+$FirstImage 	= modVtCu3oxSlideshowHelper::getFirstItem( $params );
+$swf			= $params->get('EngineURL') . '/vt_cu3ox_slideshow.swf';
+
+$ImageWidth		= $params->get('ImageWidth');
+$ImageHeight	= $params->get('ImageHeight');
+
+$FirstImage		= "<img src=\"$base_url/$FirstImage\" alt=\"Vinaora Cu3ox Slideshow\" width=\"$ImageWidth\" height=\"$ImageHeight\"/>";
+
+if($params->get('NoShadow')){
+	$PanelWidth		= $ImageWidth;
+	$PanelHeight	= $ImageHeight;
 }else{
-	$PanelWidth		= (int) $params->get('ImageWidth') + 2*$params->get('MarginHoz', '80');;
-	$PanelHeight	= (int) $params->get('ImageHeight') + 2*$params->get('MarginVer', '80');
+	$PanelWidth		= (int) $ImageWidth + 2*$params->get('MarginHoz', '70');
+	$PanelHeight	= (int) $ImageHeight + 2*$params->get('MarginVer', '70');
 }
+
+// Todo: Add SWFObject param
+// Todo: Add z-index param
 
 require JModuleHelper::getLayoutPath('mod_vt_cu3ox_slideshow', $params->get('layout', 'default'));
